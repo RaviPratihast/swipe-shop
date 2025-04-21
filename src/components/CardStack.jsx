@@ -20,11 +20,26 @@ const CardStack = ({ products }) => {
     const threshold = 100;
     const velocity = info.velocity.x;
     const offset = info.offset.x;
+    const yOffset = info.offset.y;
 
-    if (Math.abs(offset) > threshold || Math.abs(velocity) > 500) {
+    // Check for upward swipe
+    if (yOffset < -threshold || info.velocity.y < -500) {
+      // Animate card up and fade out
+      y.set(-500);
+      x.set(0);
+      rotate.set(0);
+      handleSwipe("up");
+    }
+    // Check for horizontal swipes
+    else if (Math.abs(offset) > threshold || Math.abs(velocity) > 500) {
       const swipeDirection = offset > 0 ? "right" : "left";
+      // Animate the card off screen
+      x.set(swipeDirection === "left" ? -500 : 500);
+      y.set(0);
+      rotate.set(swipeDirection === "left" ? -25 : 25);
       handleSwipe(swipeDirection);
     } else {
+      // Reset position if not swiped far enough
       x.set(0);
       y.set(0);
       rotate.set(0);
@@ -32,7 +47,14 @@ const CardStack = ({ products }) => {
     setIsDragging(false);
   };
 
-  const handleSwipe = (_direction) => {
+  const handleSwipe = (direction) => {
+    console.log(
+      direction === "right"
+        ? `Liked Product ID: ${products[currentIndex].id}`
+        : direction === "left"
+        ? `Passed Product ID: ${products[currentIndex].id}`
+        : `Added to Cart Product ID: ${products[currentIndex].id}`
+    );
     setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length);
   };
 

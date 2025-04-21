@@ -32,12 +32,7 @@ const CardStack = ({ products }) => {
     setIsDragging(false);
   };
 
-  const handleSwipe = (direction) => {
-    console.log(
-      `${direction === "right" ? "Liked" : "Passed"} Product ID: ${
-        products[currentIndex].id
-      }`
-    );
+  const handleSwipe = (_direction) => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length);
   };
 

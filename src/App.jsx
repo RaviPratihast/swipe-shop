@@ -1,7 +1,16 @@
 import React from "react";
+import CardStack from "./components/CardStack";
+import { products } from "./mockData";
 
-const App = () => {
-  return <h1 className="text-3xl text-red-500 font-bold underline">Hello world!</h1>;
-};
+function App() {
+  return (
+    <div className="min-h-screen bg-gray-100 py-8">
+      <div className="container mx-auto px-4">
+        <h1 className="text-3xl font-bold text-center mb-8">Swipe Shop</h1>
+        <CardStack products={products} />
+      </div>
+    </div>
+  );
+}
 
 export default App;
